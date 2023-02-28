@@ -3,8 +3,8 @@ module mymodule
 go 1.16
 
 require (
-golang.org/x/text latest
-golang.org/x/net latest
-golang.org/x/sys latest
+	go.mongodb.org/mongo-driver v1.11.2 // indirect
+	golang.org/x/net v0.7.0
+	golang.org/x/sys v0.5.0
+	golang.org/x/text v0.7.0
 )
-

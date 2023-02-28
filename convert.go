@@ -2,11 +2,29 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
+
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+var client *mongo.Client
+
 func main() {
+	var err error
+	client, err = mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = client.Connect(nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer client.Disconnect(nil)
+
 	http.HandleFunc("/", temperatureHandler)
 	http.ListenAndServe(":8080", nil)
 }
@@ -59,6 +77,12 @@ func temperatureHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	err = saveToDB(temperature, unit, result)
+	if err != nil {
+		http.Error(w, "Failed to save to database", http.StatusInternalServerError)
+		return
+	}
+
 	displayResult(w, temperature, unit, result)
 }
 
@@ -87,5 +111,16 @@ func displayResult(w http.ResponseWriter, temperature float64, unit string, resu
 		</html>
 	`, temperature, unit, result, resultUnit)
 	fmt.Fprintf(w, resultPage)
+}
+
+func saveToDB(temperature float64, fromUnit string, result float64) error {
+	collection := client.Database("test").Collection("temperatures")
+	_, err := collection.InsertOne(nil, map[string]interface{}{
+		"temperature": temperature,
+		"from_unit":   fromUnit,
+		"to_unit":     "F" /* assume always converted to Fahrenheit */,
+		"result":      result,
+	})
+	return err
 }
 
