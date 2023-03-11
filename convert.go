@@ -118,7 +118,7 @@ func saveToDB(temperature float64, fromUnit string, result float64) error {
 	_, err := collection.InsertOne(nil, map[string]interface{}{
 		"temperature": temperature,
 		"from_unit":   fromUnit,
-		"to_unit":     "F" /* assume always converted to Fahrenheit */,
+		"to_unit":     "F", /* assume always converted to Fahrenheit */
 		"result":      result,
 	})
 	return err
