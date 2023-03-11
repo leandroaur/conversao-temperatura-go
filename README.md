@@ -1,68 +1,31 @@
-# Temperature Converter in Go with MongoDB
+# Temperature Converter
 
-This is a temperature converter in Go that uses MongoDB to store the converted temperatures. This README file will provide instructions on how to use the program.
+This is a simple web application that converts temperatures between Celsius and Fahrenheit and saves the results to a MongoDB database.
 
-## Prerequisites
+## How to use
 
-To use this program, you will need:
+### Using Go
 
-- Go installed on your computer
-- MongoDB instance running and accessible at the default port (27017) 
-  - if you don't have MongoDB installed, you can download it from the official website: https://www.mongodb.com/try/download/community
-- Docker installed on your computer (optional)
+To run the application from Go, you need to have Go and MongoDB installed on your computer. Once you have them installed, follow these steps:
 
-## Running the program
+1. Clone this repository to your computer.
+2. Open a terminal and navigate to the root directory of the cloned repository.
+3. Start MongoDB by running the command `mongod`.
+4. Run the command `go run .` to start the application.
+5. Open your web browser and go to `http://localhost:8080` to access the application.
 
-### Running the program with Go
+### Using Docker
 
-1. Clone this repository to your local machine.
-git clone https://github.com/your-username/temperature-converter.git
+To run the application from Docker, you need to have Docker installed on your computer. Once you have it installed, follow these steps:
 
-2. Navigate to the project directory.
+1. Clone this repository to your computer.
+2. Open a terminal and navigate to the root directory of the cloned repository.
+3. Run the command `docker-compose up` to start the application and MongoDB.
+4. Open your web browser and go to `http://localhost:8080` to access the application.
 
-cd temperature-converter
+Note that when running the application from Docker, the application will be able to connect to the MongoDB container by using the hostname `mongodb` instead of `localhost`. So, in the application code, you need to change the MongoDB URI to `mongodb://mongodb:27017` instead of `mongodb://localhost:27017`.
 
-3. Make sure that MongoDB is running and accessible on the default port (27017).
+## License
 
-4. Build the program using Go.
-
-`go build convert.go`
-
-5. Run the program.
-
-`go run convert.go`
-
-The program should now be running and ready to accept temperature inputs.
-
-### Running the program with Docker
-
-1. Clone this repository to your local machine.
-
-git clone https://github.com/your-username/temperature-converter.git
-
-2. Navigate to the project directory.
-
-`cd temperature-converter`
-
-3. Build the Docker image.
-
-`docker build -t temperature-converter .`
-
-4. Run the Docker container.
-
-`docker run -p 8080:8080 -d temperature-converter`
-
-The program should now be running inside the Docker container and accessible on port 8080.
-
-## Usage
-
-Once the program is running, you can use it to convert temperatures. The program accepts input temperatures in Fahrenheit and converts them to Celsius.
-
-To convert a temperature, open your web browser and navigate to `http://localhost:8080/convert/<temperature>`, where `<temperature>` is the temperature you want to convert in Fahrenheit.
-
-For example, to convert a temperature of 75 degrees Fahrenheit, navigate to `http://localhost:8080/convert/75` in your web browser. The program will display the converted temperature in Celsius.
-
-## Conclusion
-
-That's it! You should now be able to use the temperature converter in Go with MongoDB. If you have any questions or issues, feel free to contact me. Thank you for using my program!
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
